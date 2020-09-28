@@ -1,0 +1,194 @@
+---
+title: "pulseTD"
+author: "XinWang"
+date: "2020-01-17"
+output: 
+  pdf_document:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{pulseTD}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Information
+**Package:** pulseTD
+
+**Type:** Package
+
+**Author:** XinWang
+
+**Maintainer:** The package maintainer <xindd_2014@163.com>
+
+**Title:** Identification of Transcriptional Dynamics using Pulse Models via 4su-Seq Data and RNA-Seq Data
+
+**Version:** 0.2.0
+
+**Date:** 2020-1-17
+
+**Description:** A tool for analyzing the transcription, processing and degradation rates of genes by 4sU-seq (the Metabolic Label 4-thiouridine) data and RNA-seq (RNA sequencing) data. It can not only recognize the transcriptional dynamic rates at the measurement time points, but also obtain continuous changes in transcriptional dynamics. More importantly, it is able to predict the trend of mRNA (Mature RNA) transcription and expression changes in the future.
+
+**License:** GPL-2
+
+**Encoding:** UTF-8
+
+**Depends:** R (>= 3.4.0)
+
+**Imports:** AnnotationDbi,SummarizedExperiment,Rsamtools,Biobase,S4Vectors,methods,parallel,GenomicFeatures, ggplot2, grid, GenomicAlignments
+
+**URL:** https://github.com/bioWzz/pulseTD_0.1.0
+
+**RoxygenNote:** 6.1.1
+
+**Suggests:** knitr, rmarkdown, TxDb.Hsapiens.UCSC.hg19.knownGene
+
+**VignetteBuilder:** knitr
+
+# Abstract
+The life cycle of intracellular mRNA mainly undergoes transcriptional production, splicing maturation and degradation processes. We refer to the dynamic changes of these processes over time as transcriptional dynamics. Under the influence of external disturbances and other factors, the common regulation of transcriptional dynamic processes leads to different levels of RNA expression. The emergence of labeled RNA (4sU-RNA) has made it possible for us to analyze this transcriptional dynamics. The pulseTD package is analyzed with 4sU-seq data to resolve the transcriptional dynamics of the gene. PulseTD constructed based on pulse model can identify the transcriptional dynamic rate of the measurement time node, and can also recognize the continuous change of mRNA transcription dynamics during the monitoring time, and the model can also predict the trend of mRNA transcription and expression changes in the future.
+
+The workflow of the pulseTD packages is:
+
+1. The input data is the alignment file of 4sU-seq labeled data and unlabeled data (Labeled bam and UnLabeled bam respectively).The expression values of pre-mRNA, mRNA and label-mRNA were calculated separately. 
+2. The fitted pulse model is an optimization problem. There are six parameters $\Theta=(h_{0},h_{1},h_{2},t_{1}, t_{2},\beta)$, which are determined by minimizing the stationary error. 
+3. Due to the influence of random initial values, the parameters of the fitting failure will occur, and the parameters will be re-estimated using correctionParams. 
+4. Solving the dynamic rate of transcription, including transcription, processing and degradation rates, or predicting steady state rates. 
+5. Finally, the expression value of the gene is predicted based on the transcription rate of the three stages.
+
+# Evaluation of expression values of total RNA and labeled RNA
+In the process of calculating the expression value, we use the RPKM calculation method. The user only needs to provide a list of the bam files of the reads alignment result, and the annotation file in the txdb format.The expression value can be obtained by using the estimateExpression() function. Test files are provided in the pulseTD package.
+
+
+```{r import packages, message=FALSE}
+library(pulseTD)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+```
+
+```{r estimateExpression}
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+test_path <- file.path(system.file(package="pulseTD"),'extdata/test1.sorted.bam')
+test_path2 <- file.path(system.file(package="pulseTD"),'extdata/test2.sorted.bam')
+```
+```{r, eval=FALSE}
+rpkmres <- estimateExpression(txdb,c(test_path,test_path2), by='gene')
+```
+```{r}
+data('rpkmres', package='pulseTD')
+head(rpkmres$total_exp)
+head(rpkmres$pre_exp)
+```
+
+# Fitting pulse model parameters
+pulseTD uses a pulse model, which is multiplied by two sigmoid functions, the parameter vector $(h_{0},h_{1},h_{2},t_{1}, t_{2},\beta)$, where $h_{0},h_{1},h_{2}$ represent the initial state rate, the value, the peak rate value and the steady state rate value again, $t_{1}, t_{2}$ are the maximum times of the first and second rise or fall changes, respectively, and $\beta$ is the slope of the two changes. The unknown vector $X=(\Theta_{\alpha},\Theta_\gamma,\Theta _\beta)$ has 15 parameters. We use the R stats function nlminb to optimize. 
+
+```{r estimateParams, eval=FALSE}
+data('rpkmSim', package='pulseTD')
+rpkm_TL <- rpkmSim$labexon[1:2,]
+rpkm_PT <- rpkmSim$totintr[1:2,]
+rpkm_TT <- rpkmSim$totexon[1:2,]
+TimeGrid <- c(0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180)
+tL <- 10
+pulseRates<- estimateParams(rpkm_TL, rpkm_TT, rpkm_PT,TimeGrid, tL, clusterNumber=1,loopnumber=10)
+```
+
+# Correction pulse model parameters
+In the process of parameter fitting, we adopt the method of random initial value. Due to the size of the random initial value or the overflow of the number of iterations, the parameters of the fitting failure may occur, which may cause the data of some genes lose meaning. Not conducive to our subsequent analysis. To this end, we re-estimate the genes that failed to fit, and if they fail again, these genes will be filtered out. Only need to use the correctionParams function to complete the re-evaluation of the parameters.
+
+```{r correctionParams, eval=FALSE}
+data('pulseRates', package='pulseTD')
+pulseRates_correct = correctionParams(pulseRates)
+pulseRates_correct@fitfailure
+```
+
+# Get steady state parameters
+If we need to analyze the steady state characteristics of the transitional dynamics, we can obtain the pulse function parameters corresponding to the transcription, processing and degradation of each gene, and also use the pulseModel to obtain the corresponding rate curve.
+
+```{r getParams}
+data('pulseRates', package='pulseTD')
+TimeGrid <- c(0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180)
+transcription_params = getParams(pulseRates,'transcription')
+degradation_params = getParams(pulseRates, 'degradation')
+processing_params = getParams(pulseRates, 'processing')
+head(transcription_params)
+head(degradation_params)
+head(processing_params)
+transcription_params = getParams(pulseRates, 'transcription', genename=c(1,2,3))
+head(transcription_params)
+# get pulse Model value
+transcription_pulse = pulseModel(as.matrix(transcription_params[1,]), TimeGrid)
+degradation_pulse = pulseModel(as.matrix(degradation_params[1,]), TimeGrid)
+processing_pulse = pulseModel(as.matrix(processing_params[1,]), TimeGrid)
+```
+
+# Transcriptional dynamic rates
+The pulseTD method can recognize the transcription, splicing maturation, degradation rate and predict the future trend of transcriptional dynamic rate at any time during the detection period.
+
+## Get Transcriptional dynamic rate
+This function is used to calculate the transcriptional dynamic rate of a gene. You can get the discrete or continuous rate values of the measurement time node. At the same time, it has a predictive function that provides rate values for any future time node or any range of time.
+
+```{r getRates}
+data('pulseRates', package='pulseTD')
+pulseRates_correct <- correctionParams(pulseRates)
+transcription = getRates(pulseRates_correct,'transcription')
+degradation = getRates(pulseRates_correct, 'degradation')
+processing = getRates(pulseRates_correct, 'processing')
+head(transcription)
+```
+
+If you want to get the coefficients of the parameters, you only need to divide the expression on the basis of the rate:
+
+```{r getRates by solver}
+if(length(pulseRates_correct@fitfailure)==0){
+  genename=pulseRates_correct@genenames
+}else{
+  genename=pulseRates_correct@genenames[-pulseRates_correct@fitfailure]
+}
+data('rpkmSim', package='pulseTD')
+simTL <- rpkmSim$labexon[c(1,2,3),]
+simPT <- rpkmSim$totintr[c(1,2,3),]
+simTT <- rpkmSim$totexon[c(1,2,3),]
+trans_factor <- getRates(pulseRates_correct,'transcription', genename=c(1,2,3))
+degr_factor <- getRates(pulseRates_correct, 'degradation', genename=c(1,2,3)) /(simTT-simPT)
+proc_factor <- getRates(pulseRates_correct,'processing',genename=c(1,2,3))/simPT
+head(degr_factor)
+```
+
+## Predicting transcriptional dynamic rates
+Predicting the transcription dynamic rate requires only adding a specific time series to the getRates function, for example:
+```{r getRates, predict}
+transcription_pre <- getRates(pulseRates_correct, 'transcription', timevector=seq(0,360, 15))
+degradation_pre <- getRates(pulseRates_correct, 'degradation', timevector=seq(0,360, 15))
+processing_pre <- getRates(pulseRates_correct, 'processing', timevector <- seq(0,360, 15))
+head(degradation_pre)
+```
+
+## Draw transcriptional dynamics
+```{r plotRatest}
+data('pulseRates', package='pulseTD')
+plotRates(pulseRates, 15)
+```
+
+```{r plotRatest,any time}
+plotRates(pulseRates, 15, predict=c(0,360,15))
+```
+
+# Predicted gene expression value
+This function is used to predict the expression of all gene at a given time, including the expression of pre-mRNA and the expression of total mRNA. End time and time interval can be arbitrarily defined
+```{r predictExpression}
+data('pulseRates', package='pulseTD')
+pulseRates_correct = correctionParams(pulseRates)
+TimeGrid = seq(0,180,15)
+```
+```{r, eval=FALSE}
+preExp = predictExpression(pulseRates_correct, tg=TimeGrid)
+```
+```{r}
+data('preExp', package='pulseTD')
+df = data.frame(preExp[['NM_001002011']])
+head(df)
+```
+
+# SessionInfo
+```{r sessionInfo}
+sessionInfo()
+```

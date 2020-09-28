@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Information</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Information</h1>
+
+<p><strong>Package:</strong> pulseTD</p>
+
+<p><strong>Type:</strong> Package</p>
+
+<p><strong>Author:</strong> XinWang</p>
+
+<p><strong>Maintainer:</strong> The package maintainer <xindd_2014@163.com></p>
+
+<p><strong>Title:</strong> Identification of Transcriptional Dynamics using Pulse Models via 4su-Seq Data and RNA-Seq Data</p>
+
+<p><strong>Version:</strong> 0.2.0</p>
+
+<p><strong>Date:</strong> 2020-1-17</p>
+
+<p><strong>Description:</strong> A tool for analyzing the transcription, processing and degradation rates of genes by 4sU-seq (the Metabolic Label 4-thiouridine) data and RNA-seq (RNA sequencing) data. It can not only recognize the transcriptional dynamic rates at the measurement time points, but also obtain continuous changes in transcriptional dynamics. More importantly, it is able to predict the trend of mRNA (Mature RNA) transcription and expression changes in the future.</p>
+
+<p><strong>License:</strong> GPL-2</p>
+
+<p><strong>Encoding:</strong> UTF-8</p>
+
+<p><strong>Depends:</strong> R (&gt;= 3.4.0)</p>
+
+<p><strong>Imports:</strong> AnnotationDbi,SummarizedExperiment,Rsamtools,Biobase,S4Vectors,methods,parallel,GenomicFeatures, ggplot2, grid, GenomicAlignments</p>
+
+<p><strong>URL:</strong> <a href="https://github.com/bioWzz/pulseTD_0.1.0">https://github.com/bioWzz/pulseTD_0.1.0</a></p>
+
+<p><strong>RoxygenNote:</strong> 6.1.1</p>
+
+<p><strong>Suggests:</strong> knitr, rmarkdown, TxDb.Hsapiens.UCSC.hg19.knownGene</p>
+
+<p><strong>VignetteBuilder:</strong> knitr</p>
+
+<h1>Abstract</h1>
+
+<p>The life cycle of intracellular mRNA mainly undergoes transcriptional production, splicing maturation and degradation processes. We refer to the dynamic changes of these processes over time as transcriptional dynamics. Under the influence of external disturbances and other factors, the common regulation of transcriptional dynamic processes leads to different levels of RNA expression. The emergence of labeled RNA (4sU-RNA) has made it possible for us to analyze this transcriptional dynamics. The pulseTD package is analyzed with 4sU-seq data to resolve the transcriptional dynamics of the gene. PulseTD constructed based on pulse model can identify the transcriptional dynamic rate of the measurement time node, and can also recognize the continuous change of mRNA transcription dynamics during the monitoring time, and the model can also predict the trend of mRNA transcription and expression changes in the future.</p>
+
+<p>The workflow of the pulseTD packages is:</p>
+
+<ol>
+<li>The input data is the alignment file of 4sU-seq labeled data and unlabeled data (Labeled bam and UnLabeled bam respectively).The expression values of pre-mRNA, mRNA and label-mRNA were calculated separately. </li>
+<li>The fitted pulse model is an optimization problem. There are six parameters \(\Theta=(h_{0},h_{1},h_{2},t_{1}, t_{2},\beta)\), which are determined by minimizing the stationary error. </li>
+<li>Due to the influence of random initial values, the parameters of the fitting failure will occur, and the parameters will be re-estimated using correctionParams. </li>
+<li>Solving the dynamic rate of transcription, including transcription, processing and degradation rates, or predicting steady state rates. </li>
+<li>Finally, the expression value of the gene is predicted based on the transcription rate of the three stages.</li>
+</ol>
+
+<h1>Evaluation of expression values of total RNA and labeled RNA</h1>
+
+<p>In the process of calculating the expression value, we use the RPKM calculation method. The user only needs to provide a list of the bam files of the reads alignment result, and the annotation file in the txdb format.The expression value can be obtained by using the estimateExpression() function. Test files are provided in the pulseTD package.</p>
+
+<pre><code class="r">library(pulseTD)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+</code></pre>
+
+<pre><code class="r">txdb &lt;- TxDb.Hsapiens.UCSC.hg19.knownGene
+test_path &lt;- file.path(system.file(package=&quot;pulseTD&quot;),&#39;extdata/test1.sorted.bam&#39;)
+test_path2 &lt;- file.path(system.file(package=&quot;pulseTD&quot;),&#39;extdata/test2.sorted.bam&#39;)
+</code></pre>
+
+<pre><code class="r">rpkmres &lt;- estimateExpression(txdb,c(test_path,test_path2), by=&#39;gene&#39;)
+</code></pre>
+
+<pre><code class="r">data(&#39;rpkmres&#39;, package=&#39;pulseTD&#39;)
+head(rpkmres$total_exp)
+</code></pre>
+
+<pre><code>##           test1.sorted.bam test2.sorted.bam
+## 1                   0.0000           0.0000
+## 10                  0.0000           0.0000
+## 100                 0.0000           0.0000
+## 1000              211.6078           0.0000
+## 10000               0.0000         126.8966
+## 100008586           0.0000           0.0000
+</code></pre>
+
+<pre><code class="r">head(rpkmres$pre_exp)
+</code></pre>
+
+<pre><code>##           test1.sorted.bam test2.sorted.bam
+## 1                   0.0000           0.0000
+## 10                  0.0000           0.0000
+## 100                 0.0000           0.0000
+## 1000              211.6078           0.0000
+## 10000               0.0000         126.8966
+## 100008586           0.0000           0.0000
+</code></pre>
+
+<h1>Fitting pulse model parameters</h1>
+
+<p>pulseTD uses a pulse model, which is multiplied by two sigmoid functions, the parameter vector \((h_{0},h_{1},h_{2},t_{1}, t_{2},\beta)\), where \(h_{0},h_{1},h_{2}\) represent the initial state rate, the value, the peak rate value and the steady state rate value again, \(t_{1}, t_{2}\) are the maximum times of the first and second rise or fall changes, respectively, and \(\beta\) is the slope of the two changes. The unknown vector \(X=(\Theta_{\alpha},\Theta_\gamma,\Theta _\beta)\) has 15 parameters. We use the R stats function nlminb to optimize. </p>
+
+<pre><code class="r">data(&#39;rpkmSim&#39;, package=&#39;pulseTD&#39;)
+rpkm_TL &lt;- rpkmSim$labexon[1:2,]
+rpkm_PT &lt;- rpkmSim$totintr[1:2,]
+rpkm_TT &lt;- rpkmSim$totexon[1:2,]
+TimeGrid &lt;- c(0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180)
+tL &lt;- 10
+pulseRates&lt;- estimateParams(rpkm_TL, rpkm_TT, rpkm_PT,TimeGrid, tL, clusterNumber=1,loopnumber=10)
+</code></pre>
+
+<h1>Correction pulse model parameters</h1>
+
+<p>In the process of parameter fitting, we adopt the method of random initial value. Due to the size of the random initial value or the overflow of the number of iterations, the parameters of the fitting failure may occur, which may cause the data of some genes lose meaning. Not conducive to our subsequent analysis. To this end, we re-estimate the genes that failed to fit, and if they fail again, these genes will be filtered out. Only need to use the correctionParams function to complete the re-evaluation of the parameters.</p>
+
+<pre><code class="r">data(&#39;pulseRates&#39;, package=&#39;pulseTD&#39;)
+pulseRates_correct = correctionParams(pulseRates)
+pulseRates_correct@fitfailure
+</code></pre>
+
+<h1>Get steady state parameters</h1>
+
+<p>If we need to analyze the steady state characteristics of the transitional dynamics, we can obtain the pulse function parameters corresponding to the transcription, processing and degradation of each gene, and also use the pulseModel to obtain the corresponding rate curve.</p>
+
+<pre><code class="r">data(&#39;pulseRates&#39;, package=&#39;pulseTD&#39;)
+TimeGrid &lt;- c(0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180)
+transcription_params = getParams(pulseRates,&#39;transcription&#39;)
+degradation_params = getParams(pulseRates, &#39;degradation&#39;)
+processing_params = getParams(pulseRates, &#39;processing&#39;)
+head(transcription_params)
+</code></pre>
+
+<pre><code>##                     h_0       h_1        h_2        t_1          t_2       beta
+## NM_001001144 0.11295563 0.4589428 0.00000000 132.170719 6.308600e-01 0.02633666
+## NM_001001181 0.24647999 2.8269864 0.31151147  11.891063 6.439013e+00 0.74346946
+## NM_001001182 0.27325454 0.9300345 0.49710424  24.340866 1.186131e+01 1.41675244
+## NM_001001321 0.06339698 0.5196398 0.07353324  65.328972 3.470082e-06 0.15197429
+## NM_001001327 0.08849345 0.2739045 0.13508018   7.051308 3.552354e+01 2.57216514
+## NM_001001491 1.54999821 0.1000000 3.67351731   8.344161 1.612998e+01 0.13479243
+</code></pre>
+
+<pre><code class="r">head(degradation_params)
+</code></pre>
+
+<pre><code>##                     h_0       h_1        h_2       t_1       t_2       beta
+## NM_001001144 0.11295563 0.3795136 0.00000000 12.738544  9.248983 0.00000000
+## NM_001001181 0.24647999 1.1293815 0.31151147 16.996846 15.080018 0.08716181
+## NM_001001182 0.27325454 0.3141762 0.49710424  8.412483  1.834571 4.66035538
+## NM_001001321 0.06339698 0.1000000 0.07353324 21.610315 85.331531 0.23077001
+## NM_001001327 0.08849345 0.5341112 0.13508018  0.000000 15.289209 0.04998870
+## NM_001001491 1.54999821 0.1308190 3.67351731  0.000000 23.392743 0.08488996
+</code></pre>
+
+<pre><code class="r">head(processing_params)
+</code></pre>
+
+<pre><code>##                     h_0       h_1        h_2       t_1        t_2      beta
+## NM_001001144 0.11295563 0.4266085 0.00000000  3.167969  0.1509406 0.0000000
+## NM_001001181 0.24647999 7.9655976 0.31151147 10.264606  2.0241911 7.7074421
+## NM_001001182 0.27325454 0.1856750 0.49710424  3.411901  1.2867854 1.1040746
+## NM_001001321 0.06339698 0.2163238 0.07353324 54.143099 17.1795979 0.1627383
+## NM_001001327 0.08849345 0.2810966 0.13508018  7.127619 34.9767296 0.4167378
+## NM_001001491 1.54999821 0.1000000 3.67351731  7.836081 17.9436041 0.1239117
+</code></pre>
+
+<pre><code class="r">transcription_params = getParams(pulseRates, &#39;transcription&#39;, genename=c(1,2,3))
+head(transcription_params)
+</code></pre>
+
+<pre><code>##                    h_0       h_1       h_2       t_1       t_2       beta
+## NM_001001144 0.1129556 0.4589428 0.0000000 132.17072  0.630860 0.02633666
+## NM_001001181 0.2464800 2.8269864 0.3115115  11.89106  6.439013 0.74346946
+## NM_001001182 0.2732545 0.9300345 0.4971042  24.34087 11.861306 1.41675244
+</code></pre>
+
+<pre><code class="r"># get pulse Model value
+transcription_pulse = pulseModel(as.matrix(transcription_params[1,]), TimeGrid)
+degradation_pulse = pulseModel(as.matrix(degradation_params[1,]), TimeGrid)
+processing_pulse = pulseModel(as.matrix(processing_params[1,]), TimeGrid)
+</code></pre>
+
+<h1>Transcriptional dynamic rates</h1>
+
+<p>The pulseTD method can recognize the transcription, splicing maturation, degradation rate and predict the future trend of transcriptional dynamic rate at any time during the detection period.</p>
+
+<h2>Get Transcriptional dynamic rate</h2>
+
+<p>This function is used to calculate the transcriptional dynamic rate of a gene. You can get the discrete or continuous rate values of the measurement time node. At the same time, it has a predictive function that provides rate values for any future time node or any range of time.</p>
+
+<pre><code class="r">data(&#39;pulseRates&#39;, package=&#39;pulseTD&#39;)
+pulseRates_correct &lt;- correctionParams(pulseRates)
+</code></pre>
+
+<pre><code>## The number of genes that are incorrectly fitted is 2
+</code></pre>
+
+<pre><code>## The parameters are being corrected...
+</code></pre>
+
+<pre><code>## There are no parameters that need to be corrected
+</code></pre>
+
+<pre><code class="r">transcription = getRates(pulseRates_correct,&#39;transcription&#39;)
+degradation = getRates(pulseRates_correct, &#39;degradation&#39;)
+processing = getRates(pulseRates_correct, &#39;processing&#39;)
+head(transcription)
+</code></pre>
+
+<pre><code>##                       0         15         30         45        60        75
+## NM_001001144 0.11966425 0.12256525 0.12649350 0.13157500 0.1377012 0.1442935
+## NM_001001181 0.24685315 2.41520194 0.31194012 0.31151148 0.3115115 0.3115115
+## NM_001001182 0.27325454 0.27325572 0.92975204 0.49710591 0.4971042 0.4971042
+## NM_001001321 0.06341657 0.06358833 0.06525168 0.08015076 0.1499872 0.1311809
+## NM_001001327 0.08849345 0.27390451 0.27390451 0.13535092 0.1350802 0.1350802
+## NM_001001491 2.71457012 4.57168616 4.39687883 3.81843669 3.6939773 3.6762500
+##                      90        105       120        135        150        165
+## NM_001001144 0.15006525 0.15299729 0.1508103 0.14196461 0.12663891 0.10686767
+## NM_001001181 0.31151147 0.31151147 0.3115115 0.31151147 0.31151147 0.31151147
+## NM_001001182 0.49710424 0.49710424 0.4971042 0.49710424 0.49710424 0.49710424
+## NM_001001321 0.08209855 0.07444751 0.0736272 0.07354286 0.07353422 0.07353334
+## NM_001001327 0.13508018 0.13508018 0.1350802 0.13508018 0.13508018 0.13508018
+## NM_001001491 3.67387956 3.67356528 3.6735237 3.67351815 3.67351742 3.67351733
+##                     180
+## NM_001001144 0.08563694
+## NM_001001181 0.31151147
+## NM_001001182 0.49710424
+## NM_001001321 0.07353325
+## NM_001001327 0.13508018
+## NM_001001491 3.67351732
+</code></pre>
+
+<p>If you want to get the coefficients of the parameters, you only need to divide the expression on the basis of the rate:</p>
+
+<pre><code class="r">if(length(pulseRates_correct@fitfailure)==0){
+  genename=pulseRates_correct@genenames
+}else{
+  genename=pulseRates_correct@genenames[-pulseRates_correct@fitfailure]
+}
+data(&#39;rpkmSim&#39;, package=&#39;pulseTD&#39;)
+simTL &lt;- rpkmSim$labexon[c(1,2,3),]
+simPT &lt;- rpkmSim$totintr[c(1,2,3),]
+simTT &lt;- rpkmSim$totexon[c(1,2,3),]
+trans_factor &lt;- getRates(pulseRates_correct,&#39;transcription&#39;, genename=c(1,2,3))
+degr_factor &lt;- getRates(pulseRates_correct, &#39;degradation&#39;, genename=c(1,2,3)) /(simTT-simPT)
+proc_factor &lt;- getRates(pulseRates_correct,&#39;processing&#39;,genename=c(1,2,3))/simPT
+head(degr_factor)
+</code></pre>
+
+<pre><code>##                       0         15         30         45         60         75
+## NM_001001144 0.02508825 0.02262594 0.02250336 0.02353307 0.02296562 0.01951561
+## NM_001001181 0.03664791 0.03475087 0.03287368 0.02936564 0.02559548 0.02463987
+## NM_001001182 0.02552493 0.04741030 0.04133363 0.03767907 0.03663663 0.03566684
+##                      90        105        120        135        150        165
+## NM_001001144 0.01833815 0.01867275 0.01872305 0.01884841 0.01911755 0.01878233
+## NM_001001181 0.02422412 0.02513287 0.02367529 0.02245979 0.02289548 0.02325505
+## NM_001001182 0.03825759 0.04179205 0.04350929 0.04568818 0.04715932 0.04672974
+##                     180
+## NM_001001144 0.01889986
+## NM_001001181 0.02294901
+## NM_001001182 0.04735161
+</code></pre>
+
+<h2>Predicting transcriptional dynamic rates</h2>
+
+<p>Predicting the transcription dynamic rate requires only adding a specific time series to the getRates function, for example:</p>
+
+<pre><code class="r">transcription_pre &lt;- getRates(pulseRates_correct, &#39;transcription&#39;, timevector=seq(0,360, 15))
+degradation_pre &lt;- getRates(pulseRates_correct, &#39;degradation&#39;, timevector=seq(0,360, 15))
+processing_pre &lt;- getRates(pulseRates_correct, &#39;processing&#39;, timevector &lt;- seq(0,360, 15))
+head(degradation_pre)
+</code></pre>
+
+<pre><code>##                       0         15         30         45         60        75
+## NM_001001144 0.12311730 0.12311730 0.12311730 0.12311730 0.12311730 0.1231173
+## NM_001001181 0.39291104 0.56297838 0.61316735 0.47969646 0.37066370 0.3288291
+## NM_001001182 0.27325454 0.49710424 0.49710424 0.49710424 0.49710424 0.4971042
+## NM_001001321 0.06364514 0.06993642 0.09538515 0.09983502 0.09999428 0.0999832
+## NM_001001327 0.23741048 0.24608146 0.22412403 0.19214365 0.16677054 0.1513193
+## NM_001001491 3.58744685 4.37250672 4.26701026 3.92706136 3.75495839 3.6972564
+##                      90        105        120        135        150        165
+## NM_001001144 0.12311730 0.12311730 0.12311730 0.12311730 0.12311730 0.12311730
+## NM_001001181 0.31630076 0.31281488 0.31186464 0.31160705 0.31153733 0.31151847
+## NM_001001182 0.49710424 0.49710424 0.49710424 0.49710424 0.49710424 0.49710424
+## NM_001001321 0.09947984 0.08968305 0.07477248 0.07357397 0.07353452 0.07353328
+## NM_001001327 0.14306211 0.13892351 0.13691243 0.13594954 0.13549174 0.13527481
+## NM_001001491 3.68023883 3.67540473 3.67404607 3.67366535 3.67355875 3.67352891
+##                     180        195        210        225        240        255
+## NM_001001144 0.12311730 0.12311730 0.12311730 0.12311730 0.12311730 0.12311730
+## NM_001001181 0.31151337 0.31151199 0.31151161 0.31151151 0.31151148 0.31151148
+## NM_001001182 0.49710424 0.49710424 0.49710424 0.49710424 0.49710424 0.49710424
+## NM_001001321 0.07353324 0.07353324 0.07353324 0.07353324 0.07353324 0.07353324
+## NM_001001327 0.13517218 0.13512366 0.13510072 0.13508989 0.13508477 0.13508235
+## NM_001001491 3.67352056 3.67351822 3.67351757 3.67351738 3.67351733 3.67351732
+##                     270        285        300        315        330        345
+## NM_001001144 0.12311730 0.12311730 0.12311730 0.12311730 0.12311730 0.12311730
+## NM_001001181 0.31151147 0.31151147 0.31151147 0.31151147 0.31151147 0.31151147
+## NM_001001182 0.49710424 0.49710424 0.49710424 0.49710424 0.49710424 0.49710424
+## NM_001001321 0.07353324 0.07353324 0.07353324 0.07353324 0.07353324 0.07353324
+## NM_001001327 0.13508121 0.13508067 0.13508041 0.13508029 0.13508024 0.13508021
+## NM_001001491 3.67351731 3.67351731 3.67351731 3.67351731 3.67351731 3.67351731
+##                     360
+## NM_001001144 0.12311730
+## NM_001001181 0.31151147
+## NM_001001182 0.49710424
+## NM_001001321 0.07353324
+## NM_001001327 0.13508020
+## NM_001001491 3.67351731
+</code></pre>
+
+<h2>Draw transcriptional dynamics</h2>
+
+<pre><code class="r">data(&#39;pulseRates&#39;, package=&#39;pulseTD&#39;)
+plotRates(pulseRates, 15)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk plotRatest"/></p>
+
+<pre><code class="r">plotRates(pulseRates, 15, predict=c(0,360,15))
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk plotRatest,any time"/></p>
+
+<h1>Predicted gene expression value</h1>
+
+<p>This function is used to predict the expression of all gene at a given time, including the expression of pre-mRNA and the expression of total mRNA. End time and time interval can be arbitrarily defined</p>
+
+<pre><code class="r">data(&#39;pulseRates&#39;, package=&#39;pulseTD&#39;)
+pulseRates_correct = correctionParams(pulseRates)
+</code></pre>
+
+<pre><code>## The number of genes that are incorrectly fitted is 2
+</code></pre>
+
+<pre><code>## The parameters are being corrected...
+</code></pre>
+
+<pre><code>## There are no parameters that need to be corrected
+</code></pre>
+
+<pre><code class="r">TimeGrid = seq(0,180,15)
+</code></pre>
+
+<pre><code class="r">preExp = predictExpression(pulseRates_correct, tg=TimeGrid)
+</code></pre>
+
+<pre><code class="r">data(&#39;preExp&#39;, package=&#39;pulseTD&#39;)
+df = data.frame(preExp[[&#39;NM_001002011&#39;]])
+head(df)
+</code></pre>
+
+<pre><code>##          PT       TT      upPT    downPT     upTT   downTT
+## 1 0.2398300 34.47230 0.2816086 0.1980514 39.13227 29.81233
+## 2 0.3456477 30.53136 0.4515708 0.2397246 31.88580 29.17692
+## 3 0.2210542 31.21627 0.2552815 0.1868269 32.64075 29.79178
+## 4 0.1803224 31.28001 0.2279913 0.1326536 32.55389 30.00613
+## 5 0.1911017 30.22977 0.2281425 0.1540609 31.12172 29.33782
+## 6 0.2012920 29.62785 0.2311313 0.1714527 30.49318 28.76252
+</code></pre>
+
+<h1>SessionInfo</h1>
+
+<pre><code class="r">sessionInfo()
+</code></pre>
+
+<pre><code>## R version 3.4.4 (2018-03-15)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=C                              
+## [2] LC_CTYPE=Chinese (Simplified)_China.936   
+## [3] LC_MONETARY=Chinese (Simplified)_China.936
+## [4] LC_NUMERIC=C                              
+## [5] LC_TIME=Chinese (Simplified)_China.936    
+## 
+## attached base packages:
+## [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+## [8] methods   base     
+## 
+## other attached packages:
+##  [1] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2
+##  [2] GenomicFeatures_1.30.3                 
+##  [3] AnnotationDbi_1.40.0                   
+##  [4] Biobase_2.38.0                         
+##  [5] GenomicRanges_1.30.3                   
+##  [6] GenomeInfoDb_1.14.0                    
+##  [7] IRanges_2.12.0                         
+##  [8] S4Vectors_0.16.0                       
+##  [9] BiocGenerics_0.24.0                    
+## [10] pulseTD_0.2.0                          
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.3                 lattice_0.20-38           
+##  [3] circlize_0.4.8             prettyunits_1.0.2         
+##  [5] Rsamtools_1.30.0           Biostrings_2.46.0         
+##  [7] assertthat_0.2.1           zeallot_0.1.0             
+##  [9] digest_0.6.23              R6_2.4.1                  
+## [11] backports_1.1.5            RSQLite_2.1.5             
+## [13] evaluate_0.14              highr_0.8                 
+## [15] httr_1.4.1                 ggplot2_3.2.1             
+## [17] pillar_1.4.3               GlobalOptions_0.1.1       
+## [19] zlibbioc_1.24.0            rlang_0.4.2               
+## [21] progress_1.2.2             lazyeval_0.2.2            
+## [23] blob_1.2.0                 GetoptLong_0.1.7          
+## [25] Matrix_1.2-18              labeling_0.3              
+## [27] RMySQL_0.10.18             BiocParallel_1.12.0       
+## [29] stringr_1.4.0              munsell_0.5.0             
+## [31] RCurl_1.95-4.12            bit_1.1-14                
+## [33] biomaRt_2.34.2             DelayedArray_0.4.1        
+## [35] compiler_3.4.4             rtracklayer_1.38.3        
+## [37] xfun_0.11                  pkgconfig_2.0.3           
+## [39] shape_1.4.4                SummarizedExperiment_1.8.1
+## [41] tibble_2.1.3               GenomeInfoDbData_1.0.0    
+## [43] matrixStats_0.54.0         XML_3.98-1.19             
+## [45] crayon_1.3.4               GenomicAlignments_1.14.2  
+## [47] bitops_1.0-6               grid_3.4.4                
+## [49] lifecycle_0.1.0            gtable_0.3.0              
+## [51] DBI_1.1.0                  magrittr_1.5              
+## [53] scales_1.1.0               stringi_1.4.3             
+## [55] farver_2.0.1               XVector_0.18.0            
+## [57] vctrs_0.2.1                rjson_0.2.20              
+## [59] RColorBrewer_1.1-2         tools_3.4.4               
+## [61] bit64_0.9-7                hms_0.5.2                 
+## [63] colorspace_1.4-1           ComplexHeatmap_1.17.1     
+## [65] memoise_1.1.0              knitr_1.26
+</code></pre>
+
+</body>
+
+</html>
